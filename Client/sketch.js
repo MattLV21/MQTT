@@ -1,5 +1,9 @@
 let client;
-let id = "200d00";
+let id = "";
+import("https://api.ipify.org?format=jsonp&callback=getIP");
+function getIP(json) { 
+  id = json.ip;
+}
 
 function setup(){
   mqttInit()

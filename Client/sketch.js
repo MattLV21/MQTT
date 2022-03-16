@@ -3,6 +3,7 @@ let id = "";
 import("https://api.ipify.org?format=jsonp&callback=getIP");
 function getIP(json) { 
   id = json.ip;
+  console.log(id);
 }
 
 function setup(){

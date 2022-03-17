@@ -3,7 +3,6 @@ let id = "";
 import("https://api.ipify.org?format=jsonp&callback=getIP");
 function getIP(json) { 
   id = json.ip;
-  console.log(id);
 }
 
 function setup(){
@@ -22,7 +21,7 @@ function resiveChallenge(challenge) {
 }
 
 function toGet() {
-  //location.replace("resiveChallenge.html");
+  location.replace("resiveChallenge.html");
   client.publish("giveChallenge", id);
 }
 function toMake() {

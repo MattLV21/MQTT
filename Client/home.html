@@ -14,18 +14,50 @@
 </head>
 <body>
   <main>    
+    <div class="page" id="home">
+      <div class="buttons" >
+      <div>
+          </div>
+          <div>
+            <button onclick="toGet()" class="getButton">Get Challenge</button><br>
+            <button onclick="toMake()" class="makeButton">Make Challenge</button>
+          </div>
+        </div>
+        <div class="text">
+          <h1 id="info_box">det er sjovere når vi kan se noget mere tekst</h1>
+        </div>
+    </div>
+    <div class="page" id="receive" class="hidden">
       <div class="buttons">
-        <div>
-        </div>
-        <div>
-          <button onclick="toGet()" class="getButton">Get Challenge</button><br>
-          <button onclick="toMake()" class="makeButton">Make Challenge</button>
-        </div>
+        <div></div>
+        <h1 id="Challenge_Text" style="color:red;">hey</h1>
       </div>
-
       <div class="text">
-        <h1 id="Challenge_Text">det er sjovere når vi kan se noget mere tekst</h1>
+        <div></div>
+        <div><button onclick="completed()" class="Completed">Completed</button></div>
+        <button onclick="toHome()" class="homeButton">Back</button>
       </div>
+    </div>
+    <div class="page" id="add" class="hidden">
+      <div class="buttons">
+        <div></div>
+        <div></div>
+        <div>
+          <div>
+            <input type="text" id="link" class="input">
+            <br>
+            <button onclick="make()" class="Search" id="make">Make</button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="text">
+        <div></div>
+        <div></div>
+        <button onclick="toHome()" class="homeButton">Back</button>
+      </div>
+    </div>
+      
   </main>
 </body>
 </html>

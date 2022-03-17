@@ -1,41 +1,59 @@
 let client;
-let id = "";
-import("https://api.ipify.org?format=jsonp&callback=getIP");
-function getIP(json) { 
-  id = json.ip;
-}
+let clientId;
 
 function setup(){
-  mqttInit()
+  clientId = getItem('clientId');
+  mqttInit();
 
-  client.subscribe(id);
+  client.subscribe(clientId);
   //når vi modtager beskeder fra MQTT serveren kaldes denne funktion
   client.on('message', (topic, message) => {
     console.log('Received Message: ' + message.toString() + '\nOn topic: ' + topic);
-    resiveChallenge(message);
+    if(topic == clientId){
+      resiveChallenge(message);
+    }
   });
+  select("#info_box").html("Du har completed " + getItem("completed") + " challenges");
 }
-
 function resiveChallenge(challenge) {
   select("#Challenge_Text").html(challenge.toString());
 }
-
 function toGet() {
-  location.replace("resiveChallenge.html");
-  client.publish("giveChallenge", id);
+  select('#home').addClass('hidden');
+  select("#add").addClass("hidden");
+  select('#receive').removeClass('hidden');
+  client.publish("giveChallenge", clientId);
 }
+
 function toMake() {
-  location.replace("makeChallenge.html");
+  select("#home").addClass("hidden");
+  select("#receive").addClass("hidden");
+  select("#add").removeClass("hidden");
+}
+function make() {
+  let value = select("#link").value();
+  select("#link").value("");
+  client.publish("Konge_spil", value);
+}
+function completed() {
+  select('#home').removeClass('hidden');
+  select('#receive').addClass('hidden');
+
+  let completed = getItem("completed");
+  if(!completed) {
+    storeItem('completed', 1);
+  }
+  else {
+    completed++;
+    storeItem("completed", completed);
+  }
+  select("#info_box").html("Du har completed " + getItem("completed") + " challenges");
 }
 function toHome() {
-  location.replace("home.html");
+  select('#home').removeClass('hidden');
+  select('#receive').addClass('hidden');
 }
 
-function Search() {
-  var link = document.getElementById("link").value
-  client.publish('Konge_spil', link)
-  console.log("send");
-}
 
 
 
@@ -86,7 +104,11 @@ function Search() {
 
 const mqttInit = () => {
   //opret et id med en random talkode og sæt gem servernavnet i en variabel
-  const clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8)
+  if(!clientId){
+    clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8)
+    storeItem('clientId', clientId)
+  }
+
   const host = 'wss://mqtt.nextservices.dk'
 
   //opret et objekt med de oplysninger der skal bruges til at forbinde til serveren
@@ -125,7 +147,7 @@ const mqttInit = () => {
 
   //hvis forbindelsen lykkes kaldes denne funktion
   client.on('connect', () => {
-    console.log('Client connected:' + clientId)
+    console.log('Client connected: ' + clientId)
   })
 
   //når forbindelsen lukkes kaldes denne funktion

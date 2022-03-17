@@ -7,7 +7,7 @@ body {
     box-sizing: border-box;
     font-family: Raleway;
 }
-main{
+.page{
     background-color: #f5f5f5;
     width:100vw;
     height:100vh;
@@ -32,6 +32,9 @@ main{
     font-size: 1em;
     border-radius: 1em;
 }
+.hidden{
+    display:none;
+}
 .text{
     display: grid;
     place-items: center;
@@ -41,6 +44,10 @@ main{
 #Challenge_Text {
     font-weight: bold;
     text-align: center;
+    width: 9em;
+}
+#info_box {
+    font-weight: bold;
 }
 
 .input {
